@@ -37,7 +37,7 @@
     .site-header nav { max-width: var(--max-width); margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
     .theme-btn { margin-right: 12px; border-radius: 10px; border: 1px solid rgba(230,232,238,.12); background: rgba(110,168,254,.10); color: #e6e8ee; padding: 6px 10px; font-weight: 600; cursor: pointer; }
     .theme-btn:hover { background: rgba(110,168,254,.20); }
-    .home { background: rgba(15,23,48,.90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
+    .home { font-size: 50px; background: rgba(15,23,48,.90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .about { background: rgba(8,18,40,.90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .projects { background: rgba(11,13,22,.90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .contact { background: rgba(18,20,40,.90); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
@@ -52,6 +52,9 @@
     text-align: center;
     text-decoration: none;
     }
+     #canvas { position: fixed; top: 0; left: 0; z-index: 0; width: 100vw; height: 100vh; }
+     #canvas html, body { height: 100%; margin:0; }
+     #canvas body { justify-content: center; display: flex; align-items: center; }
     .fa:hover { background-color: #0077A0;  }
     .fa-linkedin { color: white; background-color: #0077B5; border-radius: 25px; padding: 9px; border: 1px solid rgba(230,232,238,.12);  }
     .fa-linkedin:hover { color: white; border: 1px solid rgba(230,232,238,.12); }
@@ -61,7 +64,7 @@
     .fa-envelope:hover { color: #070709; background-color: #6ea8fe; border: 1px solid rgba(230,232,238,.12); }
 
      html { scroll-behavior: smooth; }
-     body { margin: 0; font-family: "Inter", system-ui, sans-serif; line-height: 1.6; color: #e6e8ee; background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center; }     
+     body { margin: 0; font-family: "Inter", system-ui, sans-serif; line-height: 1.6; color: #e6e8ee; background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center bottom; }     
      header nav { position: relative; }
      header nav ul { list-style: none; display: flex; gap: 1rem; padding: 0; margin: 0; background: transparent; backdrop-filter: none; -webkit-backdrop-filter: none; }
      header nav a { color: white; text-decoration: none; font-weight: 600; }
@@ -137,12 +140,83 @@
     
  </style>
 </head>
+
+<canvas id="canvas" width="1000" height="800"></canvas>
+<script>
+var canvas = document.getElementById("canvas");
+var ctx = canvas.getContext("2d");
+const autumnColors = ["#DAA520", "#B22222", "#FF7F50", "#D2691E", "#FFD700"]; // Goldenrod, Firebrick, Coral, Chocolate, Gold
+const winterColors = ["#FFFFFF", "#ADD8E6", "#B0C4DE"]; // White, LightBlue, LightSteelBlue
+const springColors = ["#FFB6C1", "#FF69B4", "#DB7093"]; // LightPink, HotPink, PaleVioletRed
+const summerColors = ["#32CD32", "#008000", "#2E8B57"]; // LimeGreen, Green, SeaGreen
+const currentMonth = new Date().getMonth()
+
+let tipColors;
+if (currentMonth >= 8 && currentMonth <= 10 ) {
+    tipColors = autumnColors;
+} 
+else if (currentMonth === 11 || currentMonth <= 1 ) {
+    tipColors = winterColors; 
+} 
+else if (currentMonth >= 2 && currentMonth <= 4 ) {
+    tipColors = springColors;
+} 
+else {
+    tipColors = summerColors;
+}
+
+
+
+
+function draw(startX, startY, len, angle, branchWidth) {
+
+    ctx.lineWidth = branchWidth;
+    //ctx.strokeStyle = "#556B2F"
+    //ctx.fillStyle = "green"
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    
+    ctx.beginPath();
+    ctx.save();
+
+    ctx.translate(startX, startY);
+    ctx.rotate(angle * Math.PI / 180);
+    ctx.moveTo(0, 0);
+    // adds a straight line to the current path
+    ctx.lineTo(0, -len);
+    // renders the straight line
+    ctx.stroke();
+
+    if(len < 11) {
+        const randomColor = tipColors[Math.floor(Math.random() * tipColors.length)];
+        ctx.fillStyle = randomColor;
+        ctx.beginPath()
+        ctx.arc(0, -len, 4, 0, Math.PI * 2);
+        ctx.fill()
+        ctx.restore()
+        return;
+    }
+
+    draw(0, -len, len * 0.8, angle - 20, branchWidth * 0.8);
+    draw(0, -len, len * 0.8, angle + 20, branchWidth * 0.8);
+
+    // restores the recently saved canvas state by popping the top entry in the drawing state stack
+    ctx.restore();
+}
+        draw(canvas.width / 2, canvas.height, canvas.height / 7, 0, 12); 
+
+</script>
+
+
+
 <body>
 
 <header class="site-header">
+    
     <nav>
         <button id="nav-toggle" class="menu-toggle" aria-label="Toggle navigation" aria-controls="primary-nav" aria-expanded="false">☰ Menu</button>
         <ul id="primary-nav">
+            
             <li><a class="navButtons" href="#beginning">Home</a></li>
             <li><a class="navButtons" href="#about">About Me</a></li>          
             <li><a class="navButtons" href="#projects">Projects</a></li>
@@ -152,7 +226,9 @@
     </nav>
 </header>
 <main>
+
 <section id="beginning" class="section home">
+    
     <div class="container">
         <h1>Daniel's Portfolio Webpage</h1>
         <p class="subtitle">Hey, welcome to my webpage. Things you will find here: projects I have built, skills I have and information about me.</p>
@@ -224,9 +300,9 @@
 <section id="contact" class="section contact">
     <div class="container">
         <h1>Contact Me At</h1>
-        <button onclick="linkedInButton" class="fa fa-linkedin"></button>
-        <button onclick="githubButton" class="fa fa-github"></button>
-        <button onclick="mailButton" class="fa fa-envelope"></button>
+        <button onclick="linkedInButton()" class="fa fa-linkedin"></button>
+        <button onclick="githubButton()" class="fa fa-github"></button>
+        <button onclick="mailButton()" class="fa fa-envelope"></button>
     </div>
 </section>
 
