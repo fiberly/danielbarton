@@ -64,7 +64,25 @@
     .fa-envelope:hover { color: #070709; background-color: #6ea8fe; border: 1px solid rgba(230,232,238,.12); }
 
      html { scroll-behavior: smooth; }
-     body { margin: 0; font-family: "Inter", system-ui, sans-serif; line-height: 1.6; color: #e6e8ee; background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center bottom; }     
+    body {  /* Sticky Footer Layout */
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+
+        /* General Font & Color (Dark Mode Default) */
+        margin: 0;
+        font-family: "Inter", system-ui, sans-serif;
+        line-height: 1.6;
+        color: var(--text);
+        
+        /* Background Image Settings */
+        background-image: url('background.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        background-color: var(--dark-bg); /* Dark mode background color */
+}
      main {
         flex-grow: 1;
     }
@@ -79,7 +97,6 @@
     z-index: 1;
     
 }
-     #background-wrapper { background-color: var(--page-bg); min-height: 100vh; display: flex; flex-direction: column; }
      nav { padding: 2px; }
      footer { background: rgba(11,18,38,.80); backdrop-filter: (5px); -webkit-backdrop-filter: blur(5px); }
      @media (max-width: 720px) {
@@ -143,8 +160,7 @@
     html[data-theme="light"] .theme-btn { border-color: rgba(0,0,0,.10); border-width: 1px; }
     html[data-theme="light"] .navButtons { background: rgba(110,168,254,.08); color: #0b1120; border-color: rgba(0,0,0,.10); }
     html[data-theme="light"] .navButtons:hover { background: rgba(0,0,0,0.04); color: #2563eb; text-decoration: none; }
-    html[data-theme="light"] body { background-color: var(--light-bg); background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center; }
-    html[data-theme="dark"] body {  background-image: url('background.jpg')}
+    html[data-theme="light"] body { background-color: var(--light-bg); color: #0b1120; }
     html[data-theme="light"] .subtitle { color: black;}
     
  </style>
@@ -222,7 +238,6 @@ function draw(startX, startY, len, angle, branchWidth) {
 
 </script>
 
-<div id="background-wrapper">
 <header class="site-header">
     
     <nav>
@@ -325,7 +340,7 @@ function draw(startX, startY, len, angle, branchWidth) {
     <span id="year"></span> Daniel Barton
     
 </footer>
-</div>
+
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     
