@@ -64,7 +64,7 @@
     .fa-envelope:hover { color: #070709; background-color: #6ea8fe; border: 1px solid rgba(230,232,238,.12); }
 
      html { scroll-behavior: smooth; }
-     body { min-height: 100vh; display: flex; flex-direction: column; margin: 0; font-family: "Inter", system-ui, sans-serif; line-height: 1.6; color: #e6e8ee; background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center bottom; }     
+     body { margin: 0; font-family: "Inter", system-ui, sans-serif; line-height: 1.6; color: #e6e8ee; background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center bottom; }     
      main {
         flex-grow: 1;
     }
@@ -79,6 +79,7 @@
     z-index: 1;
     
 }
+     #background-wrapper { background-color: var(--page-bg); min-height: 100vh; display: flex; flex-direction: column; }
      nav { padding: 2px; }
      footer { background: rgba(11,18,38,.80); backdrop-filter: (5px); -webkit-backdrop-filter: blur(5px); }
      @media (max-width: 720px) {
@@ -220,6 +221,8 @@ function draw(startX, startY, len, angle, branchWidth) {
         draw(canvas.width / 2, canvas.height, canvas.height / 7, 0, 12); 
 
 </script>
+
+<div class="background-wrapper">
 <header class="site-header">
     
     <nav>
@@ -322,6 +325,7 @@ function draw(startX, startY, len, angle, branchWidth) {
     <span id="year"></span> Daniel Barton
     
 </footer>
+</div>
 <script>
     document.getElementById('year').textContent = new Date().getFullYear();
     
