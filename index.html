@@ -7,14 +7,12 @@
     <meta property="og:title" content="Daniel's • Portfolio">
     <meta property="og:description" content="Projects, notes, and contact.">
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:image" content="https://yourdomain.com/og-image.png">
     <title>Daniel's Portfolio</title>
     <meta name="description" content="Danny's Portfolio: projects, skills, about me">
     <meta name="color-scheme" content="light dark">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-   <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="favicon/favicon-96x96.png" sizes="96x96" />
     <link rel="icon" type="image/svg+xml" href="favicon/favicon.svg" />
     <link rel="shortcut icon" href="favicon/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png" />
@@ -32,27 +30,107 @@
     .card-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
     @media (max-width: 980px){ .card-grid { grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 620px) { .card-grid { grid-template-columns: 1fr; } }
-    .card { background-color: rgba(17,19,26,.50); border: 1px solid rgba(230,232,238,.12); border-radius: 16px; padding: 18px; box-shadow: 0 10px 30px rgba(0,0,0,.35); transition: transform 0.15s ease, box-shadow 0.15s ease; margin: 25px; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
-    .card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.45); border-color: red; }
+    .card { 
+        background-color: #1a1a1a; 
+        border-radius: 13px; 
+        padding: 2px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,.35); 
+        transition: transform 0.15s ease, box-shadow 0.15s ease; 
+        backdrop-filter: blur(5px); 
+        -webkit-backdrop-filter: blur(5px); 
+        position: relative;
+        overflow: hidden;
+
+    }
+    
+    .card::before {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        border-radius: inherit;
+        z-index: 1;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+            from 0deg,
+            transparent 65%,
+            rgb(63, 139, 138) 80%,
+            transparent 95%
+        );
+        animation: rotate-border 4s linear infinite;
+        filter: blur(2px);
+
+        opacity: 0;
+        transition: opacity -.35s ease;
+        pointer-events: none;
+
+    }
+    .card:hover::before {
+        opacity: 1;
+        animation: rotate-border 4s linear infinite; 
+    }
+
+    .card .card-inner {
+        position: relative;
+        z-index: 2;
+        background: #1a1a1a;
+        border-radius: 13px;
+        padding: 20px;
+        box-sizing: border-box;
+
+        color: white;
+        font-family: system-ui, sans-serif;
+        height: 100%;
+        
+    }
+    .card:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,.45); }
     .card-header { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; background: transparent; box-shadow: none; }
     .card h3 { margin: 0; font-size: 1.05rem; }
     .card p { margin: .2rem 0; color: #a2aabc; }
     .chip { display: inline-block; border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(230,232,238,.12); font-size: .78rem; color: #a2aabc; text-decoration: none; background: rgba(110,168,254,.1); color: #6ea8fe; font-weight: 600; }
+    @keyframes rotate-border {
+        from {
+            transform: rotate(0deg);
+        }
+        to {
+            transform: rotate(360deg);
+        }
+    }
     .chip:hover { background: rgba(110, 168, 254, .2); }
+    .card-inner .chip {
+        position: absolute;
+        
+        right: 20px;
+        bottom: 20px;
+        background-color: #2f2f3a;
+        color: #a9a9ff;
+        border: none;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    .card-inner .chip:hover {
+        background-color: #6ea8fe;
+        color: #070709;
+    }
+    
     
     .site-header { position: sticky; top: 0; z-index: 1000; background: rgba(17, 17, 17, 0.75); box-shadow: 0 2px 6px rgba(0,0,0,.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); } 
     .site-header nav { max-width: var(--max-width); margin: 0 auto; padding: 10px 20px; display: flex; align-items: center; justify-content: space-between; }
     
-    .theme-btn { margin-right: 12px; border-radius: 10px; border: 1px solid rgba(230,232,238,.12); background: rgba(110,168,254,.10); color: #e6e8ee; padding: 6px 10px; font-weight: 600; cursor: pointer; }
-    .theme-btn:hover { background: rgba(110,168,254,.20); }
+    .theme-btn { margin-right: 12px; border-radius: 10px; border: 1px solid rgba(230,232,238,.12); background: #707070; color: #e6e8ee; padding: 6px 10px; font-weight: 600; cursor: pointer; }
+    .theme-btn:hover { background: #BDBDBD; }
     .home { font-size: 50px; background: rgba(15,23,48,.80); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .about { background: rgba(8,18,40,.80); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .projects { background: rgba(11,13,22,.80); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     .contact { background: rgba(18,20,40,.80); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
-    .navButtons {  margin-right: 12px; border-radius: 10px; border: 1px solid rgba(230,232,238,.12); background: rgba(110,168,254,.10); color: #e6e8ee; padding: 3px 5px; font-weight: 600; cursor: pointer; }
-    .navButtons:hover {  background: rgba(110,168,254,.20); }
-    .menu-toggle { display: none; margin-left: 12px; border-radius: 10px; border: 5px solid rgba(230,232,238,.12); background: rgba(110,168,254,.10); color: #e6e8ee; padding: 6px 10px; font-weight: 600; cursor: pointer; }
-    .menu-toggle:hover { background: rgba(110,168,254,.20); }
+    .navButtons {  margin-right: 12px; border-radius: 10px; border: 1px solid rgba(230,232,238,.12); background: #707070; color: #e6e8ee; padding: 3px 5px; font-weight: 600; cursor: pointer; }
+    .navButtons:hover {  background: #BDBDBD; color: #330066; }
+    .menu-toggle { display: none; margin-left: 12px; border-radius: 10px; border: 5px solid rgba(230,232,238,.12); background: #707070; color: #e6e8ee; padding: 6px 10px; font-weight: 600; cursor: pointer; }
+    .menu-toggle:hover { background: #BDBDBD; }
     
     .fa {
     padding: 20px;
@@ -134,16 +212,16 @@
                 gap: 8px; 
                 padding: 5px 10px; 
                 border: 1px solid rgba(230,232,238,.12);
-                background: rgba(110,168,254,.10);
+                background: #707070;
                 border-radius: 10px;
                 color: #e6e8ee; 
             }
-        html[data-theme="light"] .navButtons { border-color: transparent; border-width: 1px; }
+        .menu-toggle:hover { color: #330066; }
         header nav ul.open { display: flex; background-color: rgba(17,17,17,.98); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
         header nav a.navButtons { display: block; width: 100%; }
         html[data-theme="light"] .theme-btn { border-color: rgba(0,0,0,.10); border-width: 1px; }
-        html[data-theme="light"] .menu-toggle { border-color: rgba(0,0,0,.10); border-width: 1px; color: black;}
-        
+        html[data-theme="light"] .menu-toggle { border-color: rgba(0,0,0,.10); border-width: 1px; color: black; background-color: #707070;}
+        html[data-theme="light"] .menu-toggle:hover { background-color: #BDBDBD; color: #330066; }
      }
 
     
@@ -155,8 +233,19 @@
     html[data-theme="light"] .about { background: rgba(238,244,255,.50); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     html[data-theme="light"] .projects { background: rgba(245,248,255,.50); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     html[data-theme="light"] .contact { background: rgba(231,239,255,.50); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
-    html[data-theme="light"] .card { background: rgba(247, 250, 255, 0.60);; border-color: rgba(0,0,0,.10); box-shadow: 0 8px 24px rgba(0,0,0,.08); }
-    html[data-theme="light"] .card:hover { border-color: blue; }
+    html[data-theme="light"] .card { 
+    
+        background: rgba(247, 250, 255, 1);
+        border-radius: 13px; 
+        padding: 2px; 
+        box-shadow: 0 10px 30px rgba(0,0,0,.35); 
+        transition: transform 0.15s ease, box-shadow 0.15s ease; 
+        backdrop-filter: blur(5px); 
+        -webkit-backdrop-filter: blur(5px); 
+        position: relative;
+        overflow: hidden;
+    }
+    html[data-theme="light"] .card h3 { color: #0b1120; }
     html[data-theme="light"] .card p { color: #44506b; }
     html[data-theme="light"] .chip { background: rgba(37, 99, 235, .10); color: #0b1120; border-color: rgba(0,0,0,.10); }
     html[data-theme="light"] .chip:hover { background-color: rgba(110,168,254,.20); }
@@ -165,14 +254,89 @@
     
     html[data-theme="light"] header nav ul.open { background-color: rgba(255, 255, 255, .98); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
     html[data-theme="light"] nav { color: black; }
-    html[data-theme="light"] .theme-btn { border-color: rgba(0,0,0,.10); border-width: 1px; }
-    html[data-theme="light"] .navButtons { background: rgba(110,168,254,.08); color: #0b1120; border-color: rgba(0,0,0,.10); }
-    html[data-theme="light"] .navButtons:hover { background: rgba(0,0,0,0.04); color: #2563eb; text-decoration: none; }
+    html[data-theme="light"] .theme-btn { border-color: rgba(0,0,0,.10); border-width: 1px; background-color: #707070;}
+    html[data-theme="light"] .theme-btn:hover { background-color: #BDBDBD; }
+    html[data-theme="light"] .navButtons { background: #707070; color: #0b1120; border-color: rgba(0,0,0,.10); }
+    html[data-theme="light"] .navButtons:hover { background: #BDBDBD; color: #330066; text-decoration: none; }
     html[data-theme="light"] body { background-color: var(--light-bg); background-image: url('background.jpg'); background-size: cover; background-attachment: fixed; background-repeat: no-repeat; background-position: center; }
     html[data-theme="dark"] body {  background-image: url('background.jpg')}
     html[data-theme="light"] .subtitle { color: black;}
-    
+    html[data-theme="light"] .card .card-inner {
+        background: rgba(255, 255, 255, 0.80);
+        color: black;
+    }
+   html[data-theme="light"] .card-inner .chip:hover {
+   
+        background-color: #2563eb;
+        color: #f7faff;
+    }
+
+
+
+    html[data-theme="light"] .card::before {
+        content: '';
+        position: absolute;
+        inset: -50%;
+        border-radius: inherit;
+        z-index: 1;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(
+            from 0deg,
+            transparent 65%,
+            #cc0000 80%,
+            transparent 95%
+        );
+        animation: rotate-border 4s linear infinite;
+        filter: blur(2px);
+
+        opacity: 0;
+        transition: opacity -.35s ease;
+        pointer-events: none;
+
+    }
+
+    html[data-theme="light"] .card:hover::before {
+        opacity: 1;
+        animation: rotate-border 4s linear infinite; 
+    }
+    html[data-theme="light"] .card .card-inner {
+        position: relative;
+        z-index: 2;
+        background: rgba(247, 250, 255, 1);
+        border-radius: 13px;
+        padding: 20px;
+        box-sizing: border-box;
+
+        color: white;
+        font-family: system-ui, sans-serif;
+        height: 100%;
+        
+    }
+
+    html[data-theme="light"] .chip:hover { background: rgba(110, 168, 254, .2); }
+    html[data-theme="light"] .card-inner .chip {
+        position: absolute;
+        
+        right: 20px;
+        bottom: 20px;
+        background-color: #ffcccc;
+        color: #ff5555;
+        border: none;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    html[data-theme="light"] .card-inner .chip:hover {
+        background-color: #ff3333;
+        color: #070709;
+    }
  </style>
+
+ 
  
 </head>
 
@@ -181,6 +345,9 @@
 
 
 <body>
+
+
+
 <canvas id="canvas" width="1000" height="800"></canvas>
 <script>
 var canvas = document.getElementById("canvas");
@@ -284,63 +451,78 @@ function draw(startX, startY, len, angle, branchWidth) {
 <section id="projects" class="section projects">
     <div class="container">
         <h2>Projects</h2>
+
+
         <div class="card-grid">
+
+
         <article class="card">
-            <header class="card-header">
-                <br><button class="chip" data-link="https://github.com/fiberly/Encrypt-Text-and-Password-Generator">View Code ↗</button>
-                
+            <div class="card-inner">
+            
+            <button class="chip" data-link="https://github.com/fiberly/Encrypt-Text-and-Password-Generator">View Code ↗</button>
             </header>
-            <br>
             <h3>Password Generator & Text Encryptor</h3>
             <p>Generate Strong passwords and encrypt text.</p>
             <p><strong>Stack:</strong> Python</p>
+            <br>
+            <br>
+            
         </article>
 
     
         <article class="card">
-            <header class="card-header">
-                <br><button class="chip" data-link="https://github.com/fiberly/asset-debt-and-budget-tracker">View Code ↗</button>
+            <div class="card-inner">
+            
+                <button class="chip" data-link="https://github.com/fiberly/asset-debt-and-budget-tracker">View Code ↗</button>
                 
-            </header>
-            <br>
+            
             <h3>Asset, Debt and Budget Tracker</h3>
             <p>Track any assets and or debts that  you may have.</p>
             <p><strong>Stack:</strong> Python</p>
+            <br>
+            <br>
+            </div>
         </article>
 
         <article class="card">
-            <header class="card-header">
+            <div class="card-inner">
                 
-            <br><button class="chip" data-link="https://github.com/fiberly/Personal-Journal">View Code ↗</button>
+            <button class="chip" data-link="https://github.com/fiberly/Personal-Journal">View Code ↗</button>
 
-            </header>
-            <br>
+            
             <h3>Personal Journal</h3>
             <p>Personal Journal with a to do list.</p>
             <p><strong>Stack:</strong> HTML, CSS, JS, PHP, MySQL</p>
+            <br>
+            <br>
+           </div>
         </article>
 
         <article class="card">
-            <header class="card-header">
-               <br><button class="chip" data-link="https://github.com/fiberly/To-Do-App">View Code ↗</button>
+            <div class="card-inner">
+               <button class="chip" data-link="https://github.com/fiberly/To-Do-App">View Code ↗</button>
                 
                 
-            </header>
-            <br>
+            
             <h3>To Do applicaton</h3>
             <p>Simple To Do application</p>
             <p><strong>Stack:</strong> Swift</p>
+            <br>
+            <br>
+            </div>
         </article>
 
         <article class="card">
-            <header class="card-header">
-                <br><button class="chip" data-link="https://github.com/fiberly/galerie">View Code ↗</button>
+            <div class="card-inner">
+                <button class="chip" data-link="https://github.com/fiberly/galerie">View Code ↗</button>
                 
-            </header>
-            <br>
+            
             <h3>Photo Gallery</h3>
             <p>Photo gallery application, with login, posting of photos and purchasing of photos.</p>
             <p><strong>Stack:</strong> Swift</p>
+            <br>
+            <br>
+            </div>
         </article>
     </div>
 </div>
