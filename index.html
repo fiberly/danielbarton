@@ -140,7 +140,15 @@
     .menu-toggle:hover { background: #BDBDBD; }
     .name { font-size: 72px; }
     #horse { position: fixed; bottom: -20px; left: 20%; transform: translate(-60%); width: 200px; height: 150px; max-width: none; max-height: none; z-index: -2; }
-    
+    .card.tapped {
+        transform: translateY(-4px);
+        box-shadow: 0 14px 40px rgba(0,0,0,.45);
+    }
+    .card.tapped::before {
+        opacity: 1;
+        animation: rotate-border 4s linear infinite;
+    }
+
     .fa {
     padding: 20px;
     font-size: 30px;
@@ -193,6 +201,11 @@
     z-index: 7;
     
 }
+     html, body {
+        overscroll-behavior-y: none;
+        overscroll-behavior: none;
+     }
+
      nav { padding: 2px; }
      footer { background: rgba(11,18,38,.80); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
      @media (max-width: 720px) {
@@ -352,6 +365,11 @@
         background-color: #ff3333;
         color: #070709;
     }
+    html[data-them="light"] .card.tapped::before {
+        opacity: 1;
+        animation: rotate-border 4s linear infinite;
+    }
+
  </style>
 
 
@@ -717,6 +735,23 @@ function draw(startX, startY, len, angle, branchWidth) {
         });
         
     })();
+
+
+    const cards = document.querySelectorAll('.card');
+
+    cards.forEach(card => {
+        card.addEventListener('click', function(e) {
+            if (e.target.closest('.chip')) return;
+
+            cards.forEach(c => {
+                if (c != this) {
+                    c.classList.remove('tapped');
+
+                }
+            });
+            this.classList.toggle('tapped');
+        })
+    })
 </script>
 
 
