@@ -95,6 +95,8 @@
     .card h3 { margin: 0; font-size: 1.05rem; }
     .card p { margin: .2rem 0; color: #a2aabc; }
     .chip { display: inline-block; border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(230,232,238,.12); font-size: .78rem; color: #a2aabc; text-decoration: none; background: rgba(110,168,254,.1); color: #6ea8fe; font-weight: 600; }
+    .chiptrack { display: inline-block; border-radius: 999px; padding: 4px 10px; border: 1px solid rgba(230,232,238,.12); font-size: .78rem; color: #a2aabc; text-decoration: none; background: rgba(110,168,254,.1); color: #6ea8fe; font-weight: 600; }
+    .chiptrack:hover { background: rgba(110, 168, 254, .2); }
     @keyframes rotate-border {
         from {
             transform: rotate(0deg);
@@ -104,8 +106,18 @@
         }
     }
     .chip:hover { background: rgba(110, 168, 254, .2); }
-    .card-inner .chip {
+
+    .card-button-group {
         position: absolute;
+        right: 20px;
+        bottom: 20px; 
+        display: flex;
+        gap: 10px;
+        padding-left:20px;
+    }
+
+    .card-inner .chip {
+        
         
         right: 20px;
         bottom: 20px;
@@ -117,8 +129,28 @@
         font-weight: 500;
         cursor: pointer;
     }
+
+    .card-inner .chiptrack {
+        
+        
+        right: 20px;
+        bottom: 20px;
+        background-color: #1e1e2e;
+        color: #a2e8f0;
+        border: none;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
     .card-inner .chip:hover {
         background-color: #6ea8fe;
+        color: #070709;
+    }
+
+    .card-inner .chiptrack:hover {
+        background-color: #e2e8f0;
         color: #070709;
     }
     
@@ -278,6 +310,10 @@
     html[data-theme="light"] .card p { color: #44506b; }
     html[data-theme="light"] .chip { background: rgba(37, 99, 235, .10); color: #0b1120; border-color: rgba(0,0,0,.10); }
     html[data-theme="light"] .chip:hover, .chip:active { background-color: rgba(110,168,254,.20); }
+    html[data-theme="light"] .chiptrack {  background: rgba(37, 99, 235, .10); color: #0b1120; border-color: rgba(0,0,0,.10); }
+    html[data-theme="light"] .chiptrack:hover { background-color: rgba(110,168,254,.20); }
+
+    
     html[data-theme="light"] footer { background: rgba(234,242,255,0.75); color: black !important; backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); }
     
     
@@ -349,7 +385,7 @@
 
     html[data-theme="light"] .chip:hover { background: rgba(110, 168, 254, .2); }
     html[data-theme="light"] .card-inner .chip {
-        position: absolute;
+        
         
         right: 20px;
         bottom: 20px;
@@ -365,10 +401,36 @@
         background-color: #ff3333;
         color: #070709;
     }
+
+    html[data-theme="light"] .card-inner .chiptrack {
+        
+        
+        right: 20px;
+        bottom: 20px;
+        background-color: #ff4d4d;
+        color: #270505;
+        border: none;
+        padding: 6px 14px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+    html[data-theme="light"] .card-inner .chiptrack:hover {
+        background-color: #450a0a;
+        color: white;
+    }
     html[data-them="light"] .card.tapped::before {
         opacity: 1;
         animation: rotate-border 4s linear infinite;
     }
+
+    html[data-theme="light"] .card-button-group {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    display: flex;
+    gap: 10px; 
+}
 
  </style>
 
@@ -548,10 +610,10 @@ function draw(startX, startY, len, angle, branchWidth) {
         <article class="card">
             <div class="card-inner">
                 
-            
+                <div class="card-button-group">
                 <button class="chip" data-link="https://github.com/fiberly/asset-debt-and-budget-tracker">View Code ↗</button>
-                <button class="chip" data-link="https://fiberly.github.io/track/">View Webpage ↗</button>
-            
+                <button class="chiptrack" data-link="https://fiberly.github.io/track/">View Webpage ↗</button>
+            </div>
             <h3>Track</h3>
             <p>Track your stocks, crypto, bullion, items, budget/spending, bills and interest.</p>
             <p><strong>Stack:</strong> Python</p>
@@ -562,9 +624,9 @@ function draw(startX, startY, len, angle, branchWidth) {
 
         <article class="card">
             <div class="card-inner">
-                
+                <div class="card-button-group">
             <button class="chip" data-link="https://github.com/fiberly/Personal-Journal">View Code ↗</button>
-            
+            </div>
             
             <h3>Personal Journal</h3>
             <p>Personal Journal with a to do list.</p>
@@ -629,6 +691,18 @@ function draw(startX, startY, len, angle, branchWidth) {
         button.addEventListener('click', function() {
         const getLink = this.dataset.link;
         const userConfirm = window.confirm("Are you sure you want to leave the page and go to Github?");
+            if (userConfirm) {
+                window.location.href = getLink;
+            }
+        });
+    
+    });
+
+    const trackwebpage = document.querySelectorAll('.chiptrack[data-link]')
+    trackwebpage.forEach(button => {
+        button.addEventListener('click', function() {
+        const getLink = this.dataset.link;
+        const userConfirm = window.confirm("Are you sure you want to leave the page and go to Track webpage?");
             if (userConfirm) {
                 window.location.href = getLink;
             }
