@@ -702,7 +702,7 @@ function draw(startX, startY, len, angle, branchWidth) {
     trackwebpage.forEach(button => {
         button.addEventListener('click', function() {
         const getLink = this.dataset.link;
-        const userConfirm = window.confirm("Are you sure you want to leave the page and go to Track webpage?");
+        const userConfirm = window.confirm("Are you sure you want to leave the page and go to the Track webpage?");
             if (userConfirm) {
                 window.location.href = getLink;
             }
