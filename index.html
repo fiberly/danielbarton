@@ -612,13 +612,28 @@ function draw(startX, startY, len, angle, branchWidth) {
                 
                 <div class="card-button-group">
                 <button class="chip" data-link="https://github.com/fiberly/asset-debt-and-budget-tracker">View Code ↗</button>
-                <button class="chiptrack" data-link="https://fiberly.github.io/track/">View Webpage ↗</button>
+                <button class="chiptrack" data-link="https://fiberly.github.io/track/" data-confirm-name="Track">View Webpage ↗</button>
             </div>
             <h3>Track</h3>
             <p>Track your stocks, crypto, bullion, items, budget/spending, bills and interest.</p>
             <p><strong>Stack:</strong> Python</p>
             <br>
             <br>
+            </div>
+        </article>
+
+        <article class="card">
+            <div class="card-inner">
+                <div class="card-button-group">
+                    <button class="chip" data-link="https://github.com/fiberly/jump-rope-tracker">View Code ↗</button>
+                    <button class="chiptrack" data-link="https://fiberly.github.io/jump-rope-tracker/" data-confirm-name="Jump Rope Tracker">View Webpage ↗</button>
+                </div>
+
+                <h3>Jump Rope Tracker</h3>
+                <p>Camera-powered jump rope tracking with goals, streaks, monster challenges, workout statistics and exportable history.</p>
+                <p><strong>Stack:</strong> HTML, CSS, JavaScript and MediaPipe</p>
+                <br>
+                <br>
             </div>
         </article>
 
@@ -702,7 +717,8 @@ function draw(startX, startY, len, angle, branchWidth) {
     trackwebpage.forEach(button => {
         button.addEventListener('click', function() {
         const getLink = this.dataset.link;
-        const userConfirm = window.confirm("Are you sure you want to leave the page and go to the Track webpage?");
+        const projectName = this.dataset.confirmName || "project";
+        const userConfirm = window.confirm(`Are you sure you want to leave the page and go to the ${projectName} webpage?`);
             if (userConfirm) {
                 window.location.href = getLink;
             }
