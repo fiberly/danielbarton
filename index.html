@@ -614,8 +614,11 @@
             backdrop-filter: none;
             -webkit-backdrop-filter: none;
         }
+    }
 
-        body.mobile-nav-open::after {
+        /* Keep the Safari backdrop-filter layer alive across the desktop
+           breakpoint; recreating it during a resize can temporarily drop blur. */
+        body::after {
             content: "";
             position: fixed;
             top: var(--mobile-menu-top, 0px);
@@ -624,6 +627,8 @@
             height: var(--mobile-menu-height, 0px);
             z-index: 999;
             pointer-events: none;
+            opacity: 0;
+            will-change: opacity, height;
             background:
                 radial-gradient(80% 160% at 8% -40%, rgba(255, 255, 255, .30), transparent 56%),
                 linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .09) 48%, transparent 64%),
@@ -637,7 +642,11 @@
             -webkit-backdrop-filter: blur(30px) saturate(170%) contrast(108%);
         }
 
-        html[data-theme="light"] body.mobile-nav-open::after {
+        body.mobile-nav-open::after {
+            opacity: 1;
+        }
+
+        html[data-theme="light"] body::after {
             background:
                 radial-gradient(80% 160% at 8% -40%, rgba(255, 255, 255, .48), transparent 56%),
                 linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, .15) 48%, transparent 64%),
@@ -649,6 +658,8 @@
             backdrop-filter: blur(30px) saturate(170%) contrast(108%);
             -webkit-backdrop-filter: blur(30px) saturate(170%) contrast(108%);
         }
+
+    @media (max-width: 1180px) {
 
         /* Keep the links grey while giving them a lighter glass treatment
            than the strongly blurred menu backdrop. */
@@ -1348,6 +1359,18 @@ void main() {
         });
     
     });
+
+    const kofiButton = document.querySelector('a.kofi-button');
+    if (kofiButton) {
+        kofiButton.addEventListener('click', function(event) {
+            event.preventDefault();
+            const userConfirm = window.confirm("Are you sure you want to leave the page and go to Ko-fi?");
+
+            if (userConfirm) {
+                window.location.href = this.href;
+            }
+        });
+    }
     
     
     const linkedInButton = document.querySelector('.fa-linkedin');
@@ -1400,6 +1423,7 @@ void main() {
         const navToggle = document.getElementById('nav-toggle');
         const navList = document.getElementById('primary-nav');
         const siteHeader = document.querySelector('.site-header');
+        const mobileNavQuery = window.matchMedia('(max-width: 1180px)');
         const stored = localStorage.getItem('theme');
         if (stored === 'light' || stored === 'dark') {
             root.setAttribute('data-theme', stored);
@@ -1417,14 +1441,16 @@ void main() {
 
         // Mobile nav toggle
         function syncMobileMenuBackdrop(){
-            const isOpen = Boolean(navList?.classList.contains('open')) && window.innerWidth <= 1180;
+            const isOpen = Boolean(navList?.classList.contains('open')) && mobileNavQuery.matches;
             document.body.classList.toggle('mobile-nav-open', isOpen);
             if (!isOpen) return;
 
             const menuRect = navList.getBoundingClientRect();
             const headerRect = siteHeader.getBoundingClientRect();
-            document.body.style.setProperty('--mobile-menu-top', `${headerRect.top}px`);
-            document.body.style.setProperty('--mobile-menu-height', `${menuRect.bottom - headerRect.top}px`);
+            const backdropTop = Math.min(headerRect.top, 0);
+            const backdropHeight = Math.ceil(menuRect.bottom - backdropTop) + 2;
+            document.body.style.setProperty('--mobile-menu-top', `${backdropTop}px`);
+            document.body.style.setProperty('--mobile-menu-height', `${backdropHeight}px`);
         }
 
         navToggle?.addEventListener('click', function(){
@@ -1442,6 +1468,7 @@ void main() {
         });
 
         window.addEventListener('resize', syncMobileMenuBackdrop);
+        mobileNavQuery.addEventListener('change', syncMobileMenuBackdrop);
 
         window.addEventListener('scroll', function() {
 
